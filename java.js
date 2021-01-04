@@ -3,14 +3,17 @@
 var start = document.getElementById("start")
 var clock = document.getElementById("clock")
 var tryAgain = document.getElementById("again")
-var result = document.getElementById("result")
 tryAgain.style.visibility = "hidden";
+var result = document.getElementById("result")
 var form1 = document.getElementById("form1")
 form1.style.visibility = "hidden";
-var timeLeft = 60;
+var timeLeft = 26;
 var score = 5;
 var whichQuestion = 0;
-
+var answerX = "";
+//var highScore = localStorage.getItem(highScore);
+//var best = document.getElementById("best")
+//best.innerHTML = localStorage.getItem(highScore)
 
 
 //Questions that will generate
@@ -56,11 +59,9 @@ var theQuestions = [
 
 
 
-//The button that starts everything
+//The button that starts everything,
 start.addEventListener("click", test)
 function test() {
-
-//Timer that ends the test
     start.style.visibility = "hidden";
     clock.innerHTML = "you have " + timeLeft + " seconds left";
     form1.style.visibility = "visible"
@@ -70,15 +71,10 @@ function test() {
                 timeLeft--;
                 }
             else {
-                result.innerHTML = "you got a score of " + score;
-                tryAgain.style.visibility = "visible";
-                clock.innerHTML = "";
-                form1.style.visibility = "hidden";
-                clearTimer();
+                end()
                 }
         }
     , 1000)
-//Initiate the questions
     question(whichQuestion)
 }
 
@@ -90,8 +86,18 @@ function clearTimer() {
     clearInterval(clock)
 }
 
-
-
+//End of the game, either time ran out of the last question was answered
+function end() {
+    result.innerHTML = "you got a score of " + score;
+    tryAgain.style.visibility = "visible";
+    clock.innerHTML = "";
+    form1.style.visibility = "hidden";
+    clearTimer();
+    //if (score > highScore) {
+    //    localStorage.setItem (highScores, score)
+    //}
+    
+}
 
 
 //Displays the questions one at a time
@@ -103,12 +109,12 @@ function question(x) {
     document.getElementById("a4").innerHTML = theQuestions[x].answer4;
 }
 
-var answerX = ""
+
 //Waits for the response, and compares that response to the correct answer
-var aOne = document.getElementById("a1").addEventListener("click", checkAnswer(1))
-var aTwo = document.getElementById("a2").addEventListener("click", checkAnswer(2))
-var aThree = document.getElementById("a3").addEventListener("click", checkAnswer(3))
-var aFour = document.getElementById("a4").addEventListener("click", checkAnswer(4))
+document.getElementById("a1").addEventListener("click", checkAnswer(1))
+document.getElementById("a2").addEventListener("click", checkAnswer(2))
+document.getElementById("a3").addEventListener("click", checkAnswer(3))
+document.getElementById("a4").addEventListener("click", checkAnswer(4))
 console.log(answerX)
 
 function checkAnswer(x) {
@@ -125,7 +131,10 @@ function checkAnswer(x) {
 }
 
 
-
+if (whichQuestion > theQuestions.length) {
+    score = score + timeLeft;
+    end()
+}
 
 
 
