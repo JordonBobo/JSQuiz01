@@ -11,7 +11,7 @@
   </head>
   <body>
       
-    <div class="wrapper">
+    <div class="container">
         <header>
           <h1 class="indent">JS Quiz</h1>
         </header>
@@ -19,16 +19,24 @@
             <h2>Test your knowledge</h2>
           <div class="card-body">
               <button id="start">Start</button>
+              <section class="container" id="form1">
+                <p id="clock"></p>
+                <h4 id="q1"> Question</h4>
+                  <ol>
+                    <li><button id="a1"></button></li>
+                    <li><button id="a2"></button></li>
+                    <li><button id="a3"></button></li>
+                    <li><button id="a4"></button></li>
+                  </ol>
+                </section>
+                <h3 id="result"></h3>
+                <button id="again" onclick="location.reload();">Try again?</button>
           </div>
           </div>
-          <section>
+          <br>
+          <section class="container scoreboard">
             <h3>Compare your results to your previous attempts</h3>
-            <ol>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+            <ol></ol>
             </ol>
         </section>
       </div>
@@ -46,12 +54,6 @@
 
 
 
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="java.js"></script>
     </body>
 </html>

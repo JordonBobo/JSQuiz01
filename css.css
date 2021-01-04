@@ -11,3 +11,16 @@ card {
 .indent {
     margin-left: 5%;
 }
+
+#start {
+    margin-bottom: 10px;
+
+}
+
+#clock {
+    margin-left: 75%;
+}
+
+.scoreboard {
+    background-color: blue;
+}
