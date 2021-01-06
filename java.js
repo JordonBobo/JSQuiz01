@@ -7,7 +7,7 @@ tryAgain.style.visibility = "hidden";
 var result = document.getElementById("result")
 var form1 = document.getElementById("form1")
 form1.style.visibility = "hidden";
-var timeLeft = 26;
+var timeLeft = 60;
 var score = 5;
 var whichQuestion = 0;
 var answerX = "";
@@ -66,7 +66,7 @@ function test() {
     clock.innerHTML = "you have " + timeLeft + " seconds left";
     form1.style.visibility = "visible"
         setInterval(function(){
-            if (timeLeft !== 0) {
+            if (timeLeft > 0) {
                 clock.innerHTML = "you have " + timeLeft + " seconds left";
                 timeLeft--;
                 }
@@ -101,23 +101,42 @@ function clearTimer() {
 
 //Displays the questions one at a time
 function question(x) {
-    document.getElementById("q1").innerHTML = theQuestions[x].question;
-    document.getElementById("a1").innerHTML = theQuestions[x].answer1;
-    document.getElementById("a2").innerHTML = theQuestions[x].answer2;
-    document.getElementById("a3").innerHTML = theQuestions[x].answer3;
-    document.getElementById("a4").innerHTML = theQuestions[x].answer4;
+    if (whichQuestion > theQuestions.length -1) {
+        score = score + timeLeft;
+        end()
+    }
+    else {
+        document.getElementById("q1").innerHTML = theQuestions[x].question;
+        document.getElementById("a1").innerHTML = theQuestions[x].answer1;
+        document.getElementById("a2").innerHTML = theQuestions[x].answer2;
+        document.getElementById("a3").innerHTML = theQuestions[x].answer3;
+        document.getElementById("a4").innerHTML = theQuestions[x].answer4;
+    }
 }
 
 
 //Waits for the response, and compares that response to the correct answer
-document.getElementById("a1").addEventListener("click", checkAnswer(1))
-document.getElementById("a2").addEventListener("click", checkAnswer(2))
-document.getElementById("a3").addEventListener("click", checkAnswer(3))
-document.getElementById("a4").addEventListener("click", checkAnswer(4))
-console.log(answerX)
+function answer1() {
+    checkAnswer(1)}
+function answer2() {
+    checkAnswer(2)}
+function answer3() {
+    checkAnswer(3)}
+function answer4() {
+    checkAnswer(4)}
+document.getElementById("a1").addEventListener("click", answer1)
+document.getElementById("a2").addEventListener("click", answer2)
+document.getElementById("a3").addEventListener("click", answer3)
+document.getElementById("a4").addEventListener("click", answer4)
+//document.getElementById(“a1”).addEventListener(“click”, () => { checkAnswer(1) })
+
+
+
 
 function checkAnswer(x) {
-    answerX = "theQuestions[" + whichQuestion + "].answer" + x;
+    answerX = eval("theQuestions[" + whichQuestion + "].answer" + x);
+    console.log(answerX)
+    console.log(score)
     if (answerX == theQuestions[whichQuestion].correct) {
         score = score + 5;
         whichQuestion++;
@@ -130,10 +149,7 @@ function checkAnswer(x) {
 }
 
 
-if (whichQuestion > theQuestions.length) {
-    score = score + timeLeft;
-    end()
-}
+
 
 
 
