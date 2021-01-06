@@ -74,19 +74,12 @@ function test() {
                 end()
                 }
         }
-    , 1000)
+        , 1000)
     question(whichQuestion)
 }
 
 
-
-
-//Function that ends the timer
-function clearTimer() {
-    clearInterval(clock)
-}
-
-//End of the game, either time ran out of the last question was answered
+//End of the game, either time ran out or the last question was answered
 function end() {
     result.innerHTML = "you got a score of " + score;
     tryAgain.style.visibility = "visible";
@@ -99,6 +92,12 @@ function end() {
     
 }
 
+
+
+//Function that ends the timer
+function clearTimer() {
+    clearInterval(clock)
+}
 
 //Displays the questions one at a time
 function question(x) {
