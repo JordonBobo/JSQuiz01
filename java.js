@@ -2,8 +2,6 @@
 //Variables and hiding the questions and restart button
 var start = document.getElementById("start")
 var clock = document.getElementById("clock")
-var tryAgain = document.getElementById("again")
-tryAgain.style.visibility = "hidden";
 var result = document.getElementById("result")
 var form1 = document.getElementById("form1")
 form1.style.visibility = "hidden";
@@ -11,9 +9,13 @@ var timeLeft = 60;
 var score = 5;
 var whichQuestion = 0;
 var answerX = "";
-//var highScore = localStorage.getItem(highScore);
-//var best = document.getElementById("best")
-//best.innerHTML = localStorage.getItem(highScore)
+var highScore = localStorage.getItem(highScore);
+var scores = document.getElementById("scores");
+
+scores.innerHTML = localStorage.getItem("scoreBoard");
+var saveInitials = document.getElementById("initials")
+saveInitials.style.visibility = "hidden";
+
 
 
 //Questions that will generate
@@ -79,16 +81,40 @@ function test() {
 }
 
 
+
+var savedScores = [];
+
+document.getElementById("submit").addEventListener("click", addScore);
+
+function addScore(){
+    var userInput = document.getElementById("initialsInput").value;
+    if (userInput !== ""){
+        savedScores.push({"name": userInput, "score": score})
+        //arangeScore()
+        localStorage.setItem ("scoreBoard", savedScores)
+    }
+}
+
+
+
+//function arangeScore() {
+
+//}
+
+
+
+
+
+
 //End of the game, either time ran out or the last question was answered
 function end() {
     result.innerHTML = "you got a score of " + score;
-    tryAgain.style.visibility = "visible";
+    saveInitials.style.visibility = "visible"
     clock.innerHTML = "";
     form1.style.visibility = "hidden";
     clearTimer();
-    //if (score > highScore) {
-    //    localStorage.setItem (highScores, score)
-    //}
+    
+    
     
 }
 
@@ -147,7 +173,6 @@ function checkAnswer(x) {
         whichQuestion++;
         question(whichQuestion)}
 }
-
 
 
 
