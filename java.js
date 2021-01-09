@@ -1,16 +1,17 @@
 
-//Variables and hiding the questions and restart button
-var start = document.getElementById("start")
-var clock = document.getElementById("clock")
-var result = document.getElementById("result")
-var form1 = document.getElementById("form1")
+//Variables and hiding items not ready to be displayed
+var start = document.getElementById("start");
+var clock = document.getElementById("clock");
+var result = document.getElementById("result");
+var form1 = document.getElementById("form1");
 form1.style.visibility = "hidden";
 var timeLeft = 60;
 var score = 5;
 var whichQuestion = 0;
 var answerX = "";
-
-
+var scores = document.getElementById("scores");
+var saveInitials = document.getElementById("initials");
+saveInitials.style.visibility = "hidden";
 
 
 //Questions that will generate
@@ -52,91 +53,88 @@ var theQuestions = [
 ]
 
 
-
-
-
-
 //The button that starts everything,
-start.addEventListener("click", test)
+start.addEventListener("click", test);
 function test() {
     start.style.visibility = "hidden";
     clock.innerHTML = "you have " + timeLeft + " seconds left";
-    form1.style.visibility = "visible"
+    form1.style.visibility = "visible";
         setInterval(function(){
             if (timeLeft > 0) {
                 clock.innerHTML = "you have " + timeLeft + " seconds left";
                 timeLeft--;
                 }
             else {
-                end()
+                end();
                 }
         }
-        , 1000)
-    question(whichQuestion)
+        , 1000);
+    question(whichQuestion);
 }
 
 
+//ScoreBoard stuff:
+var prepArea = JSON.parse(localStorage.getItem("scores")) || [];
 
 
+//Generates the leaderboard from localstorage if there is any
+for (let i = 0; i < prepArea.length; i++) {
+    var ScoreBoard = document.createElement("li");
+    var person = document.createTextNode(prepArea[i].name + " " + prepArea[i].score);
+    ScoreBoard.appendChild(person);
+    scores.appendChild(ScoreBoard);
+}
 
-//ScoreBoard stuff
-
-
-
-var scores = document.getElementById("scores");
-scores.innerHTML = localStorage.getItem("scoreBoard");
-var saveInitials = document.getElementById("initials");
-saveInitials.style.visibility = "hidden";
-
-
-
-var individualScore = {}
-var savedScores = []
 
 document.getElementById("submit").addEventListener("click", addScore);
-
+var individualScore = {}
 function addScore(){
     var userInput = document.getElementById("initialsInput").value;
     if (userInput !== ""){
         individualScore.name = userInput;
         individualScore.score = score;
-        savedScores.push(individualScore);
-        //arangeScore();
-        localStorage.setItem ("scoreBoard", savedScores);
+        prepArea.push(individualScore);     
+        arangeScore();
+        storeScore();
     }
 }
 
-//function arangeScore() {}
+
+function arangeScore() {
+    prepArea.sort(function (a,b) { return b.score - a.score});
+    if (prepArea.length > 3) {prepArea.length = 3};
+}      
 
 
-
-
+function storeScore() {
+    var localPush = JSON.stringify(prepArea);
+    localStorage.setItem ("scores", localPush);
+}
 
 
 //End of the game, either time ran out or the last question was answered
 function end() {
     result.innerHTML = "you got a score of " + score;
-    saveInitials.style.visibility = "visible"
+    saveInitials.style.visibility = "visible";
     clock.innerHTML = "";
     form1.style.visibility = "hidden";
     clearTimer();
-    
-    
-    
+    console.log(1)
+    console.log(score)
 }
-
 
 
 //Function that ends the timer
 function clearTimer() {
-    clearInterval(clock)
+    clearInterval(clock);
 }
+
 
 //Displays the questions one at a time
 function question(x) {
     if (whichQuestion > theQuestions.length -1) {
         score = score + timeLeft;
-        end()
+        end();
     }
     else {
         document.getElementById("q1").innerHTML = theQuestions[x].question;
@@ -157,13 +155,12 @@ function answer3() {
     checkAnswer(3)}
 function answer4() {
     checkAnswer(4)}
-document.getElementById("a1").addEventListener("click", answer1)
-document.getElementById("a2").addEventListener("click", answer2)
-document.getElementById("a3").addEventListener("click", answer3)
-document.getElementById("a4").addEventListener("click", answer4)
+document.getElementById("a1").addEventListener("click", answer1);
+document.getElementById("a2").addEventListener("click", answer2);
+document.getElementById("a3").addEventListener("click", answer3);
+document.getElementById("a4").addEventListener("click", answer4);
 //document.getElementById(“a1”).addEventListener(“click”, () => { checkAnswer(1) })
-
-
+//This was told to me and it does work, but I have no idea why, so I didn't use it.
 
 
 function checkAnswer(x) {
@@ -171,17 +168,12 @@ function checkAnswer(x) {
     if (answerX == theQuestions[whichQuestion].correct) {
         score = score + 5;
         whichQuestion++;
-        question(whichQuestion)
+        question(whichQuestion);
     }
     else {
         timeLeft = timeLeft - 5;
+        score = score - 5;
         whichQuestion++;
         question(whichQuestion)}
 }
-
-
-
-
-
-
 
