@@ -90,14 +90,17 @@ saveInitials.style.visibility = "hidden";
 
 
 
-var savedScores = [];
+var individualScore = {}
+var savedScores = []
 
 document.getElementById("submit").addEventListener("click", addScore);
 
 function addScore(){
     var userInput = document.getElementById("initialsInput").value;
     if (userInput !== ""){
-        savedScores.push({"name": userInput, "score": score});
+        individualScore.name = userInput;
+        individualScore.score = score;
+        savedScores.push(individualScore);
         //arangeScore();
         localStorage.setItem ("scoreBoard", savedScores);
     }
