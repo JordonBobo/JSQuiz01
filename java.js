@@ -9,12 +9,7 @@ var timeLeft = 60;
 var score = 5;
 var whichQuestion = 0;
 var answerX = "";
-var highScore = localStorage.getItem(highScore);
-var scores = document.getElementById("scores");
 
-scores.innerHTML = localStorage.getItem("scoreBoard");
-var saveInitials = document.getElementById("initials")
-saveInitials.style.visibility = "hidden";
 
 
 
@@ -82,6 +77,19 @@ function test() {
 
 
 
+
+
+//ScoreBoard stuff
+
+
+
+var scores = document.getElementById("scores");
+scores.innerHTML = localStorage.getItem("scoreBoard");
+var saveInitials = document.getElementById("initials");
+saveInitials.style.visibility = "hidden";
+
+
+
 var savedScores = [];
 
 document.getElementById("submit").addEventListener("click", addScore);
@@ -89,17 +97,13 @@ document.getElementById("submit").addEventListener("click", addScore);
 function addScore(){
     var userInput = document.getElementById("initialsInput").value;
     if (userInput !== ""){
-        savedScores.push({"name": userInput, "score": score})
-        //arangeScore()
-        localStorage.setItem ("scoreBoard", savedScores)
+        savedScores.push({"name": userInput, "score": score});
+        //arangeScore();
+        localStorage.setItem ("scoreBoard", savedScores);
     }
 }
 
-
-
-//function arangeScore() {
-
-//}
+//function arangeScore() {}
 
 
 
@@ -161,8 +165,6 @@ document.getElementById("a4").addEventListener("click", answer4)
 
 function checkAnswer(x) {
     answerX = eval("theQuestions[" + whichQuestion + "].answer" + x);
-    console.log(answerX)
-    console.log(score)
     if (answerX == theQuestions[whichQuestion].correct) {
         score = score + 5;
         whichQuestion++;

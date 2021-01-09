@@ -8,6 +8,10 @@ card {
     background-color: white;
 }
 
+#bold {
+    font-weight: bold;
+}
+
 .indent {
     margin-left: 5%;
 }
