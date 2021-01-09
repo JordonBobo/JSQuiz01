@@ -73,11 +73,9 @@ function test() {
 }
 
 
-//ScoreBoard stuff:
+//Generates the leaderboard from localstorage if there is any
 var prepArea = JSON.parse(localStorage.getItem("scores")) || [];
 
-
-//Generates the leaderboard from localstorage if there is any
 for (let i = 0; i < prepArea.length; i++) {
     var ScoreBoard = document.createElement("li");
     var person = document.createTextNode(prepArea[i].name + " " + prepArea[i].score);
@@ -119,8 +117,6 @@ function end() {
     clock.innerHTML = "";
     form1.style.visibility = "hidden";
     clearTimer();
-    console.log(1)
-    console.log(score)
 }
 
 
